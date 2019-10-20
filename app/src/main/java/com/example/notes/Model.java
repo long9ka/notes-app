@@ -8,6 +8,13 @@ public class Model {
     private Date time;
     private String tag;
 
+    Model(String title, String notes, Date time, String tag) {
+        this.title = title;
+        this.notes = notes;
+        this.time = time;
+        this.tag = tag;
+    }
+
     public String getTitle() {
         return title;
     }
