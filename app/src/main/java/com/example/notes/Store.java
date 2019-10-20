@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Store extends AppCompatActivity {
@@ -27,6 +28,9 @@ public class Store extends AppCompatActivity {
         String json = sharedPreferences.getString("list-items", null);
         Type type = new TypeToken<List<Model>>(){}.getType();
         modelList = gson.fromJson(json, type);
+        if (modelList == null) {
+            modelList = new ArrayList<>();
+        }
     }
 
     public void setStore() {
