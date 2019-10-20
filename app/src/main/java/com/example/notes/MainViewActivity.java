@@ -3,12 +3,15 @@ package com.example.notes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class MainViewActivity extends AppCompatActivity {
@@ -43,10 +46,33 @@ public class MainViewActivity extends AppCompatActivity {
         store = new Store(MainViewActivity.this);
         store.getStore();
         getIdFromLayout();
-        int position = getIntent().getIntExtra("position", -1);
+        final int position = getIntent().getIntExtra("position", -1);
         if (position > -1) {
             model = store.modelList.get(position);
             setLayout();
         }
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String titleEditText = title.getText().toString();
+                String notesEditText = notes.getText().toString();
+                Date timeTextView = Calendar.getInstance().getTime();
+                String tagEditText = tag.getText().toString();
+
+                if (position > -1) {
+                    store.modelList.get(position).setTitle(titleEditText);
+                    store.modelList.get(position).setNotes(notesEditText);
+                    store.modelList.get(position).setTime(timeTextView);
+                    store.modelList.get(position).setTag(tagEditText);
+                } else {
+                    store.modelList.add(0, new Model(titleEditText, notesEditText, timeTextView, tagEditText));
+                }
+                store.setStore();
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
     }
 }
