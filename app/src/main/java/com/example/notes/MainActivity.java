@@ -1,12 +1,14 @@
 package com.example.notes;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity {
     private Store store;
@@ -30,6 +32,11 @@ public class MainActivity extends AppCompatActivity {
 
         // handle code
         store = new Store(MainActivity.this);
+        store.getStore();
+
+        adapter = new ItemAdapter(this, R.layout.list_item, store.modelList);
+        ListView listView = findViewById(R.id.list_item);
+        listView.setAdapter(adapter);
     }
 
     @Override
@@ -50,5 +57,11 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        recreate();
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
