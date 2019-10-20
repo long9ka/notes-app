@@ -12,8 +12,10 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 public class Store extends AppCompatActivity {
+
+    public List<Model> modelList;
+
     private SharedPreferences sharedPreferences;
-    private List<Model> modelList;
     private Gson gson;
 
     Store(Context context) {
