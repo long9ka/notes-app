@@ -1,7 +1,6 @@
 package com.example.notes;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -14,51 +13,47 @@ import androidx.appcompat.widget.SearchView;
 public class MainActivity extends AppCompatActivity {
     private Store store;
     private ItemAdapter adapter;
+    private ListView listView;
 
-    /**
-     * @param position
-     * -1 -> add item
-     * else -> click item
-     */
     private void openNewActivity(int position) {
-        Intent intent = new Intent(this, MainViewActivity.class);
-        intent.putExtra("position", position);
-        startActivityForResult(intent, 1);
+        startActivity(new Intent(this, MainViewActivity.class).putExtra("position", position));
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // handle code
         store = new Store(MainActivity.this);
-        store.getStore();
+    }
 
+    @Override
+    protected void onStart() {
+        store.getStore();
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
         adapter = new ItemAdapter(this, R.layout.list_item, store.modelList);
-        ListView listView = findViewById(R.id.list_item);
+        listView = findViewById(R.id.list_item);
         listView.setAdapter(adapter);
+        super.onResume();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // show search bar & button
         getMenuInflater().inflate(R.menu.menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.search_bar:
-                openSearchView(item);
-                return true;
-            case R.id.add:
-                openNewActivity(-1);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.search_bar) {
+            openSearchView(item);
+        } else if (item.getItemId() == R.id.add) {
+            openNewActivity(-1);
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void openSearchView(MenuItem item) {
@@ -75,11 +70,5 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        recreate();
-        super.onActivityResult(requestCode, resultCode, data);
     }
 }
