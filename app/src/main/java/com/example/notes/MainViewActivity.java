@@ -70,7 +70,6 @@ public class MainViewActivity extends AppCompatActivity {
                     store.modelList.add(0, new Model(titleEditText, notesEditText, timeTextView, tagEditText));
                 }
                 store.setStore();
-                setResult(RESULT_OK);
                 finish();
             }
         });
