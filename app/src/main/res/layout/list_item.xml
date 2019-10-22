@@ -7,6 +7,8 @@
 
     <LinearLayout
         android:orientation="vertical"
+        android:background="@drawable/item"
+        android:layout_margin="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -33,6 +35,7 @@
             <TextView
                 android:id="@+id/tag"
                 android:text="This is tag"
+                android:textStyle="bold"
                 android:textSize="8pt"
                 android:paddingHorizontal="5dp"
                 android:layout_weight="4"
