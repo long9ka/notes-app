@@ -43,6 +43,7 @@
     <Button
         android:id="@+id/add"
         android:text="Save"
+        android:enabled="false"
         style="@style/TextAppearance.AppCompat.Widget.Button.Colored"
         android:paddingHorizontal="15pt"
         android:layout_gravity="center_horizontal"

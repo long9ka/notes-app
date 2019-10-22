@@ -2,8 +2,12 @@ package com.example.notes;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -46,11 +50,18 @@ public class MainViewActivity extends AppCompatActivity {
         store = new Store(MainViewActivity.this);
         store.getStore();
         getIdFromLayout();
+
         final int position = getIntent().getIntExtra("position", -1);
         if (position > -1) {
             model = store.modelList.get(position);
             setLayout();
+        } else {
+            model = new Model("", "", null, "");
         }
+
+        title.addTextChangedListener(textWatcher);
+        notes.addTextChangedListener(textWatcher);
+        tag.addTextChangedListener(textWatcher);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,4 +85,27 @@ public class MainViewActivity extends AppCompatActivity {
             }
         });
     }
+
+    TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            String titleTxt = title.getText().toString().trim();
+            String notesTxt = notes.getText().toString().trim();
+            String tagTxt = tag.getText().toString().trim();
+            boolean onCreateItem = !titleTxt.isEmpty() && !notesTxt.isEmpty() && !tagTxt.isEmpty();
+            boolean onSelectItem = (titleTxt.compareTo(model.getTitle()) != 0) || (notesTxt.compareTo(model.getNotes()) != 0) || (tagTxt.compareTo(model.getTag()) != 0);
+            button.setEnabled(onCreateItem && onSelectItem);
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+
 }
