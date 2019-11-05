@@ -1,9 +1,9 @@
 # Notes App
 ### Add item
-![add](/images/Screenshot_add.png width="400")
+![add](/images/Screenshot_add.png)
 ### List
-![list](/images/Screenshot_list.png width="400")
+![list](/images/Screenshot_list.png)
 ### Edit & Review
-![edit](/images/Screenshot_edit.png width="400")
+![edit](/images/Screenshot_edit.png)
 ### Search
-![Search](/images/Screenshot_search.png width="400")
+![Search](/images/Screenshot_search.png)
